@@ -162,7 +162,7 @@
                         <div class="col-md-5 col-sm-12 col-xs-12">
                             <div class="product-image">
                                 <img src="{{ url_for('static', filename='images/' + category.replace(' ', '_') + '_' + product.name.replace(' ', '_') + '.jpeg') }}" alt="{{ product.name }}">
-S
+
                                 <span class="tag2 hot">HOT</span>
                             </div>
                         </div>
@@ -172,7 +172,7 @@ S
                                     <a href="#">{{ product.name }}<span>{{ product.category.name }}</span></a>
                                 </h5>
                                 <p class="price-container">
-                                    <span>{{ product.price }}</span>
+                                    <span> $ {{ product.price }}</span>
                                 </p>
                                 <span class="tag1"></span>
                             </div>

@@ -1,3 +1,4 @@
+
 from flask import Flask, render_template, request, redirect, url_for, flash, session
 from flask_login import login_user
 import numpy as np
@@ -39,6 +40,8 @@ def create_app():# Define the base class for models
 
     csrf = CSRFProtect(app)
     app.secret_key = 'sttds'  # Add a secret key for flash messages
+
+
 
     # Load and preprocess the data
     df = pd.read_excel(r"./dataset/sttds.xlsx")
@@ -143,9 +146,10 @@ def create_app():# Define the base class for models
 
         db.drop_all() # delete tables if already exists..
         db.create_all() #create all tables
-        db.session.add_all([Customer(name="kumar",email='kumar@yahoo.com',password='kumar123'),
-                            Customer(name="hemanth",email='hemanth@gmail.com',password='hemanth123'),
-                            Customer(name="admin",email='admin@root.com',password='admin123')
+        db.session.add_all([Customer(name="kumar",email='akrajamoni999@gmail.com',password='kumar123'),
+                            Customer(name="Dhanush",email='dhanushkunchala98@gmail.com',password='dhanush123'),
+                            Customer(name="Vamsi",email='nalamativ@mail.sacredheart.edu',password='admin123'),
+                            Customer(name="Adminteam",email='storetodoor2023@outlook.com',password='Store123')
                             ])
         db.session.commit()
         category1 = Category(name='Groceries')
@@ -231,6 +235,8 @@ def create_app():# Define the base class for models
 
         db.session.commit()
 
+       
+
         # Home page - Show categories
         @app.route('/')
         def home():
@@ -255,75 +261,85 @@ def create_app():# Define the base class for models
         # # Add product to cart
         # @app.route('/add_to_cart', methods=['POST'])
         # def add_to_cart():
-        #     if 'customer_id' in session:
-        #         customer_id = session['customer_id']
+        #     print(user.id)
+        #     if 'user_id' in session:
+        #         customer_id = session['user_id']
         #         product_id = request.form['product_id']
         #         quantity = int(request.form['quantity'])
-        #
+        
         #         # Check if the product is already in the cart
-        #         existing_cart_item = Cart.query.filter_by(customer_id=customer_id, product_id=product_id).first()
+        #         existing_cart_item = Cart.query.filter_by(customer_id=user_id, product_id=product_id).first()
         #         if existing_cart_item:
         #             existing_cart_item.quantity += quantity
         #         else:
         #             new_cart_item = Cart(customer_id=customer_id, product_id=product_id, quantity=quantity)
         #             db.session.add(new_cart_item)
-        #
+        
         #         db.session.commit()
         #         return redirect(url_for('cart'))
         #     else:
         #         return redirect(url_for('login'))
 
         # Cart page - Show cart items
-        @app.route('/cart')
-        def cart():
-            if 'customer_id' in session:
-                customer_id = session['customer_id']
-                cart_items = Cart.query.filter_by(customer_id=customer_id).all()
-                total_price = sum(item.product.price * item.quantity for item in cart_items)
-                return render_template('cart.html', cart_items=cart_items, total_price=total_price)
-            else:
-                return redirect(url_for('login'))
+        # @app.route('/cart')
+        # def cart():
+        #     if 'customer_id' in session:
+        #         customer_id = session['customer_id']
+        #         cart_items = Cart.query.filter_by(customer_id=customer_id).all()
+        #         total_price = sum(item.product.price * item.quantity for item in cart_items)
+        #         return render_template('cart.html', cart_items=cart_items, total_price=total_price)
+        #     else:
+        #         return redirect(url_for('login'))
 
         # Purchase
-        @app.route('/place_order', methods=['POST'])
-        def place_order():
-            if 'user_id' in session:
-                customer_id = session['user_id']
-                cart_items = session.get('cart', [])
+        # @app.route('/place_order', methods=['POST'])
+        # def place_order():
+        #     if 'user_id' in session:
+        #         customer_id = session['user_id']
+        #         cart_items = session.get('cart', [])
 
-                # Process the order and store the cart items in the Purchase model
-                for item in cart_items:
-                    product_id = item['id']
-                    quantity = item['quantity']
+        #         # Process the order and store the cart items in the Purchase model
+        #         for item in cart_items:
+        #             product_id = item['id']
+        #             quantity = item['quantity']
 
-                    purchase = Purchase(customer_id=customer_id, product_id=product_id, quantity=quantity)
-                    db.session.add(purchase)
+        #             purchase = Purchase(customer_id=customer_id, product_id=product_id, quantity=quantity)
+        #             db.session.add(purchase)
 
-                db.session.commit()
+        #         db.session.commit()
 
-                # Clear the cart after placing the order
-                session['cart'] = []
+        #         # Clear the cart after placing the order
+        #         session['cart'] = []
 
-                return render_template('order_placed.html')
-            else:
-                return redirect('/login')
+        #         return render_template('order_placed.html')
+        #     else:
+        #         return redirect('/login')
 
 
         # About route
         @app.route('/about')
         def about():
+            print('Working')
             return render_template('about.html')
 
         # Contact route
         @app.route('/contact', methods=['GET', 'POST'])
         def contact():
+            print('Working')
+              # Check if the user is logged in
+            if 'user_id' not in session:
+                flash('Please login to access your profile.', 'error')
+                return redirect(url_for('login'))
+
+            user_id = session['user_id']
+            user = Customer.query.get(user_id)
+
+          
             if request.method == 'POST':
-                name = request.form['name']
-                email = request.form['email']
                 message = request.form['message']
 
                 # Create a new contact object
-                new_contact = Contactus(name=name, email=email, message=message)
+                new_contact = Contactus( message=message)
 
                 # Save the contact object to the database
                 db.session.add(new_contact)
@@ -337,6 +353,20 @@ def create_app():# Define the base class for models
         @app.route('/contact-success')
         def contact_success():
             return render_template('contact_success.html')
+        
+        @app.route('/send_recommendation',methods=['GET','POST'])
+        def send_recommendation():
+            #Send the recommendation email to the customer
+              # # Load the customer data from the database
+            customers = Customer.query.all()
+            print("customers is ",customers)
+            customer_emails = ",".join([customer.email for customer in customers])
+            print("Customer emails are :", customer_emails)
+
+          
+            send_email(customer_emails, product_recommendation, offer_recommendation, offer_discounts, product_price)
+            return render_template('send_recommendation.html')
+            
 
         # Login route
         @app.route('/login', methods=['GET', 'POST'])
@@ -348,9 +378,9 @@ def create_app():# Define the base class for models
                 email = request.form['username']
                 password = request.form['password']
 
-                if email == 'storetodoor2023@outlook.com' and password == 'Admin@123':
+                if email == 'storetodoor2023@outlook.com' and password == 'Store123':
                     session['admin_logged_in'] = True
-                    return redirect(url_for('send_recommendation'))
+                    return render_template('send_recommendation.html')
 
                 user = Customer.query.filter_by(email=email).first()
                 print(user.id,user.name)
@@ -441,103 +471,105 @@ def create_app():# Define the base class for models
             else:
                 return redirect(url_for('login'))
 
-        # Step 2: Generate Verification Code
-        def generate_verification_code():
-            # Generate a random 6-digit verification code
-            return str(random.randint(100000, 999999))
+        # # Step 2: Generate Verification Code
+        # def generate_verification_code():
+        #     # Generate a random 6-digit verification code
+        #     return str(random.randint(100000, 999999))
 
-        # Step 3: Send Email with Verification Code
-        def send_verification_email(to_email, verification_code):
-            smtp_server = 'smtp-mail.outlook.com'
-            smtp_port = 587  # Replace with the appropriate SMTP port
-            smtp_username = 'storetodoor2023@outlook.com'  # Replace with your SMTP username
-            smtp_password = 'sttds@123'  # Replace with your SMTP password
+        # # Step 3: Send Email with Verification Code
+        # def send_verification_email(to_email, verification_code):
+        #     smtp_server = 'smtp-mail.outlook.com'
+        #     smtp_port = 587  # Replace with the appropriate SMTP port
+        #     smtp_username = 'storetodoor2023@outlook.com'  # Replace with your SMTP username
+        #     smtp_password = 'sttds@123'  # Replace with your SMTP password
 
-            # Compose the email message
-            subject = 'Password Reset Verification Code'
-            body = f'Your verification code is: {verification_code}'
-            message = f'Subject: {subject}\n\n{body}'
+        #     # Compose the email message
+        #     subject = 'Password Reset Verification Code'
+        #     body = f'Your verification code is: {verification_code}'
+        #     message = f'Subject: {subject}\n\n{body}'
 
-            try:
-                # Connect to the SMTP server
-                server = smtplib.SMTP(smtp_server, smtp_port)
-                server.starttls()
-                server.login(smtp_username, smtp_password)
+        #     try:
+        #         # Connect to the SMTP server
+        #         server = smtplib.SMTP(smtp_server, smtp_port)
+        #         server.starttls()
+        #         server.login(smtp_username, smtp_password)
 
-                # Send the email
-                server.sendmail(smtp_username, to_email, message)
-                server.quit()
-                return True
-            except Exception as e:
-                print('Error sending email:', str(e))
-                return False
+        #         # Send the email
+        #         server.sendmail(smtp_username, to_email, message)
+        #         server.quit()
+        #         return True
+        #     except Exception as e:
+        #         print('Error sending email:', str(e))
+        #         return False
 
-        # Step 1: Forgot Password Request
-        @app.route('/forgot_password', methods=['GET', 'POST'])
-        def forgot_password():
-            if request.method == 'POST':
-                email = request.form['email']
+        # # Step 1: Forgot Password Request
+        # @app.route('/forgot_password', methods=['GET', 'POST'])
+        # def forgot_password():
+        #     if request.method == 'POST':
+        #         email = request.form['email']
 
-                # Step 2: Generate Verification Code
-                verification_code = generate_verification_code()
+        #         # Step 2: Generate Verification Code
+        #         verification_code = generate_verification_code()
 
-                # Step 3: Send Email with Verification Code
-                if send_verification_email(email, verification_code):
-                    # Store the verification code in the session
-                    session['verification_code'] = verification_code
-                    session['email'] = email
-                    flash('A verification code has been sent to your email.')
-                    return redirect('/verify_code')
-                else:
-                    flash('Failed to send the verification code. Please try again.')
+        #         # Step 3: Send Email with Verification Code
+        #         if send_verification_email(email, verification_code):
+        #             # Store the verification code in the session
+        #             session['verification_code'] = verification_code
+        #             session['email'] = email
+        #             flash('A verification code has been sent to your email.')
+        #             return redirect('/verify_code')
+        #         else:
+        #             flash('Failed to send the verification code. Please try again.')
 
-            return render_template('forgot_password.html')
+        #     return render_template('forgot_password.html')
 
-        # Step 4: Verification Page
-        @app.route('/verify_code', methods=['GET', 'POST'])
-        def verify_code():
-            if 'verification_code' not in session or 'email' not in session:
-                return redirect('/forgot_password')
+        # # Step 4: Verification Page
+        # @app.route('/verify_code', methods=['GET', 'POST'])
+        # def verify_code():
+        #     if 'verification_code' not in session or 'email' not in session:
+        #         return redirect('/forgot_password')
 
-            if request.method == 'POST':
-                entered_code = request.form['verification_code']
-                email = session['email']
-                stored_code = session['verification_code']
+        #     if request.method == 'POST':
+        #         entered_code = request.form['verification_code']
+        #         email = session['email']
+        #         stored_code = session['verification_code']
 
-                # Step 5: Verify Code
-                if entered_code == stored_code:
-                    # Verification code is valid, proceed to password reset page
-                    return redirect('/reset_password')
-                else:
-                    flash('Invalid verification code. Please try again.')
+        #         # Step 5: Verify Code
+        #         if entered_code == stored_code:
+        #             # Verification code is valid, proceed to password reset page
+        #             return redirect('/reset_password')
+        #         else:
+        #             flash('Invalid verification code. Please try again.')
 
-            return render_template('verify_code.html')
+        #     return render_template('verify_code.html')
 
-        # Step 6: Password Reset
-        @app.route('/reset_password', methods=['GET', 'POST'])
-        def reset_password():
-            if 'verification_code' not in session or 'email' not in session:
-                return redirect('/forgot_password')
+        # # Step 6: Password Reset
+        # @app.route('/reset_password', methods=['GET', 'POST'])
+        # def reset_password():
+        #     if 'verification_code' not in session or 'email' not in session:
+        #         return redirect('/forgot_password')
 
-            if request.method == 'POST':
-                new_password = request.form['new_password']
-                email = session['email']
+        #     if request.method == 'POST':
+        #         new_password = request.form['new_password']
+        #         email = session['email']
 
-                # Step 7: Update Password
-                # Update the password for the user associated with the email in the database
+        #         # Step 7: Update Password
+        #         # Update the password for the user associated with the email in the database
 
-                flash('Your password has been reset successfully.')
-                session.pop('verification_code')
-                session.pop('email')
-                return redirect('/login')
+        #         flash('Your password has been reset successfully.')
+        #         session.pop('verification_code')
+        #         session.pop('email')
+        #         return redirect('/login')
 
-            return render_template('reset_password.html')
+        #     return render_template('reset_password.html')
 
-        # Load the customer data from the database
+        # # # Load the customer data from the database
         customers = Customer.query.all()
+        print("customers is ",customers)
 
         # Convert the customer data into a pandas DataFrame
         customer_data = pd.DataFrame([(customer.name, customer.email) for customer in customers], columns=['Name', 'Email'])
+        
 
         # Add item to cart
         @app.route('/add_to_cart/<int:product_id>', methods=['POST'])
@@ -571,9 +603,12 @@ def create_app():# Define the base class for models
         # Function to send email
         def send_email(customer_email, product_recommendations, offer_recommendations, offer_discounts, product_price):
             # Compose the email message
+            print("customer mail is", customer_email)
             message = MIMEMultipart()
             message['From'] = 'storetodoor2023@outlook.com'  # Replace with your email address
+            
             message['To'] = customer_email
+            
             message['Subject'] = 'Product Recommendation and Offer!!!!'
 
             # Email body

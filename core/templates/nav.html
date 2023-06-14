@@ -199,7 +199,7 @@
           <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
           <a href="{{ url_for('order_history') }}">Order History</a>
           <a href="{{ url_for('about') }}">About</a>
-          <a href="{{ url_for('contact') }}">Contact</a>
+          <a href="{{ url_for('contact')}}">Contact</a>
         </div>
         <div id="main">
           <button class="openbtn" onclick="openNav()">☰</button> 
@@ -214,20 +214,29 @@
             <button id="search-icon"><i class="fas fa-search"></i></button>
           </div>
 
-          <div class="navbar-cart-icon">
-            <!-- Display cart icon with cart count -->
-              <a href="/cart">
-                  <i class="fa fa-shopping-cart"></i>
-                  <span class="badge badge-pill badge-primary">{{ session.get('cart_count', 0) }}</span>
-              </a>
-          </div>
-          <div class="navbar-auth-buttons">
-
   {% if 'user_id' not in session %}
+  <div class="navbar-cart-icon">
+    <!-- Display cart icon with cart count -->
+      <a href="/cart">
+          <i class="fa fa-shopping-cart"></i>
+          <span class="badge badge-pill badge-primary">{{ session.get('cart_count', 0) }}</span>
+      </a>
+  </div>
+  <div class="navbar-auth-buttons">
+
     <a href= "{{ url_for('signup') }}" class="navbar-auth-button">Sign Up</a>
     <a href="{{ url_for('login') }}" class="navbar-auth-button">Login</a>
   {% else %}
     <p>welcome , {{session['user_name']}}</h3>
+      <div class="navbar-cart-icon">
+        <!-- Display cart icon with cart count -->
+          <a href="/cart">
+              <i class="fa fa-shopping-cart"></i>
+              <span class="badge badge-pill badge-primary">{{ session.get('cart_count', 0) }}</span>
+          </a>
+      </div>
+      <div class="navbar-auth-buttons">
+
     <a href="{{ url_for('profile') }}" class="navbar-auth-button">Profile</a>
     <a href="{{ url_for('logout') }}" class="navbar-auth-button">Logout</a>
   {% endif %}

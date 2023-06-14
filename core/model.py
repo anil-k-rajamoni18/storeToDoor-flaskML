@@ -6,7 +6,7 @@ from flask import Flask
     
 app = Flask(__name__)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://juneuser:JuneDB12@localhost:3306/stdds'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:root@localhost:3306/stdds'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
@@ -20,6 +20,9 @@ class Customer(db.Model):
 
     purchases = db.relationship('Purchase', backref='customer', lazy=True)
     contactus = db.relationship('Contactus', backref='customer', lazy=True)
+
+    def __repr__(self):
+        return f'<Customer name={self.name}, email={self.email}>'
 
     def set_password(self, password):
         self.password = generate_password_hash(password)
