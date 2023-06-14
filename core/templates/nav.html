@@ -222,10 +222,12 @@
               </a>
           </div>
           <div class="navbar-auth-buttons">
+
   {% if 'user_id' not in session %}
     <a href= "{{ url_for('signup') }}" class="navbar-auth-button">Sign Up</a>
     <a href="{{ url_for('login') }}" class="navbar-auth-button">Login</a>
   {% else %}
+    <p>welcome , {{session['user_name']}}</h3>
     <a href="{{ url_for('profile') }}" class="navbar-auth-button">Profile</a>
     <a href="{{ url_for('logout') }}" class="navbar-auth-button">Logout</a>
   {% endif %}

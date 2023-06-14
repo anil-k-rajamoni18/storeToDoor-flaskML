@@ -20,6 +20,7 @@ from flask_wtf import FlaskForm
 from flask_wtf.csrf import CSRFProtect
 from wtforms import StringField, PasswordField
 from wtforms.validators import DataRequired, Email
+from model import db , app
 import random
 
 
@@ -35,23 +36,12 @@ class LoginForm(FlaskForm):
     password = PasswordField('password', validators=[DataRequired()])
 
 def create_app():# Define the base class for models
-    # Base = declarative_base()
-    # engine = create_engine('mysql+pymysql://root:root@localhost:3306/stdds')
-    # Base.metadata.create_all(engine)
-    from model import db
-    app = Flask(__name__)
+
     csrf = CSRFProtect(app)
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:root@localhost:3306/stdds'
-    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-    db.init_app(app)
-    migrate = Migrate(app, db)
     app.secret_key = 'sttds'  # Add a secret key for flash messages
 
-
-
-
     # Load and preprocess the data
-    df = pd.read_excel(r"C:\Users\vamsi\Music\new\Dataset\sttds.xlsx")
+    df = pd.read_excel(r"./dataset/sttds.xlsx")
 
     # Prepare the data for product recommendation
     product_features = ['QUANTITY', 'RATINGS', 'PRICE']  # Add relevant features for product recommendation
@@ -151,9 +141,13 @@ def create_app():# Define the base class for models
         return product_recommendations, offer_recommendations, offer_discounts
     with app.app_context():
 
-
-
-        db.create_all()
+        db.drop_all() # delete tables if already exists..
+        db.create_all() #create all tables
+        db.session.add_all([Customer(name="kumar",email='kumar@yahoo.com',password='kumar123'),
+                            Customer(name="hemanth",email='hemanth@gmail.com',password='hemanth123'),
+                            Customer(name="admin",email='admin@root.com',password='admin123')
+                            ])
+        db.session.commit()
         category1 = Category(name='Groceries')
         category2 = Category(name='Clothing')
         category3 = Category(name='Books')
@@ -233,7 +227,7 @@ def create_app():# Define the base class for models
                 )
                 db.session.add(product)
 
-        db.create_all()
+        #db.create_all()
 
         db.session.commit()
 
@@ -248,14 +242,14 @@ def create_app():# Define the base class for models
         def category(category_id):
             print(type(category_id))
             category_ = Category.query.filter_by(id=category_id).first()
-            category2 = db.session.get(Category,category_id)
-            print(category_,category2)
+            print(category_)
             print(category_.id,category_.name)
             print(Product.query.get(1))
             products = Product.query.filter_by(category_id=category_.id).all()
             print(products)
             template_name = category_.name.lower() + '.html'
-            return render_template(template_name, category=category_, products=products)
+            print(template_name)
+            return render_template(template_name, category=category_.name, products=products)
 
 
         # # Add product to cart
@@ -359,7 +353,7 @@ def create_app():# Define the base class for models
                     return redirect(url_for('send_recommendation'))
 
                 user = Customer.query.filter_by(email=email).first()
-                print(user.id)
+                print(user.id,user.name)
 
 
                 if not user or not user.check_password(password):
@@ -369,6 +363,7 @@ def create_app():# Define the base class for models
 
                 # Set the user session
                 session['user_id'] = user.id
+                session['user_name'] = user.name
                 print(user.id,user.email,user.password)
                 flash('Login successful.', 'success')
                 return redirect(url_for('home'))

@@ -1,9 +1,14 @@
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import generate_password_hash, check_password_hash
 from dataclasses import dataclass
+from flask import Flask    
+    
+    
+app = Flask(__name__)
 
-
-db = SQLAlchemy()
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://juneuser:JuneDB12@localhost:3306/stdds'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db = SQLAlchemy(app)
 
 
 @dataclass
@@ -52,6 +57,9 @@ class Category(db.Model):
     description = db.Column(db.Text)
 
     products = db.relationship('Product', backref='category')
+
+    def __repr__(self):
+        return f'<Catergory name={self.name}>'
 @dataclass
 class Product(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -59,6 +67,9 @@ class Product(db.Model):
     description = db.Column(db.Text)
     price = db.Column(db.Float)
     category_id = db.Column(db.Integer, db.ForeignKey('category.id'), nullable=False)
+    
+    def __repr__(self):
+        return f'<Product name={self.name} , category_id= {self.category_id}>'
 @dataclass
 class Cart(db.Model):
     id = db.Column(db.Integer, primary_key=True)
