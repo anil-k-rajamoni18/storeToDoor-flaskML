@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Send Recommendation</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            padding: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .btn-send {
+            background-color: #007bff;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Send Recommendation</h1>
+        <form method="POST" action="{{ url_for('send_recommendation') }}">
+            <div class="form-group">
+                <label for="customer_email">Customer Email:</label>
+                <input type="email" class="form-control" id="customer_email" name="customer_email" required>
+            </div>
+
+            <div class="form-group">
+                <label for="product_recommendation">Product Recommendation:</label>
+                <input type="text" class="form-control" id="product_recommendation" name="product_recommendation" required>
+            </div>
+
+            <div class="form-group">
+                <label for="offer_recommendation">Offer Recommendation:</label>
+                <input type="text" class="form-control" id="offer_recommendation" name="offer_recommendation" required>
+            </div>
+
+            <div class="form-group">
+                <label for="offer_discount">Offer Discount:</label>
+                <input type="text" class="form-control" id="offer_discount" name="offer_discount" required>
+            </div>
+
+            <button type="submit" class="btn btn-send">Send Recommendation</button>
+        </form>
+    </div>
+</body>
+</html>

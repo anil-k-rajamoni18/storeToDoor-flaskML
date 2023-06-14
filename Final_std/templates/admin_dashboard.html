@@ -1,0 +1,73 @@
+<!-- admin_dashboard.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Dashboard</title>
+    <!-- Add Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Add custom styles -->
+    <style>
+        /* Custom styles */
+        .container {
+            margin-top: 50px;
+        }
+        h1 {
+            margin-bottom: 30px;
+        }
+        table {
+            width: 100%;
+        }
+        table thead th {
+            text-align: left;
+            font-weight: bold;
+        }
+        table tbody td {
+            padding: 10px;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .offer-item {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome, Admin!</h1>
+
+        <h2>Customers</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <!-- Add more customer details as needed -->
+                </tr>
+            </thead>
+            <tbody>
+                {% for customer in customers %}
+                <tr>
+                    <td>{{ customer.name }}</td>
+                    <td>{{ customer.email }}</td>
+                    <!-- Display more customer details here -->
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <h2>Offers</h2>
+        <ul>
+            {% for offer in offers %}
+            <li class="offer-item">{{ offer.name }} - {{ offer.discount }}% off</li>
+            {% endfor %}
+        </ul>
+
+        <!-- Add more sections, functionalities, and options for the admin -->
+    </div>
+
+    <!-- Add Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+{% extends 'nav.html' %}
+{% load static %}
+{% block content %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-steps/1.1.0/jquery.steps.min.js"></script>
+<link rel="stylesheet" type="text/css" href="{% static 'css/registration.css' %}">
+<script src="{% static 'js/registration.js' %}"></script>
+<style>
+.actions li:last-child a{
+display:none;
+}
+</style>
+<div class="wrapper">
+    <form method="post" action="{% url 'my_account' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div id="wizard" style="min-height:500px; margin-top:-150px;">
+            {% include 'show_message.html' %}
+            <h3>Update Profile Form</h3>
+            <section>
+                <div class="form-row"><input type="text" class="form-control" placeholder="First Name"
+                                             name="first_name" required value="{{ user_obj.first_name }}"></div>
+                <div class="form-row"><input type="text" class="form-control" placeholder="Last Name" name="last_name"
+                                             required value="{{ user_obj.last_name }}">
+                </div>
+                <div class="form-row"><input type="date" class="form-control" placeholder="Date of Birth" name="dob"
+                                             required value="{{ user_obj.dob|date:'Y-m-d' }}">
+                </div>
+                <div class="form-row"><input type="text" class="form-control" placeholder="Mobile Number" name="phone"
+                                             required value="{{ user_obj.phone }}">
+                </div>
+                <div class="form-row">
+                    <select class="form-control" required name="gender">
+                        {% if user_obj.gender == "Male" %}
+                        <option value="Male" selected>Male</option>
+                        <option value="Female">Female</option>
+                        {% else %}
+                        <option value="Male">Male</option>
+                        <option value="Female" selected>Female</option>
+                        {% endif %}
+                    </select>
+                </div>
+                <div class="form-row"><input type="submit" class="form-control btn btn-primary" value="Submit"></div>
+            </section>
+        </div>
+    </form>
+</div>
+ <!-- Include footer -->
+  {% include 'footer.html' %}
+<script>
+    var link = document.querySelector('li > a[href="#finish"]');
+    link.style.display = 'none';
+
+
+
+
+
+</script>
+{% endblock %}

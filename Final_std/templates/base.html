@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Storetodoor</title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.2/css/bootstrap.min.css">
+  <!-- Custom CSS -->
+  <style>
+    .category-tile {
+      background-color: #f9f9f9;
+      border: 1px solid #ddd;
+      padding: 20px;
+      text-align: center;
+      margin-bottom: 20px;
+      border-radius: 10px;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .category-tile img {
+      max-width: 100%;
+      margin-bottom: 10px;
+      border-radius: 10px;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .category-tile h3 {
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+
+    .category-tile a {
+      display: inline-block;
+    }
+
+    .category-tile:hover {
+      transform: translateY(-5px);
+      box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .category-tile:hover img {
+      transform: scale(1.05);
+      box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Footer styles */
+    .footer {
+      background-color: #333;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .footer .company-name {
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .footer .social-icons a {
+      color: #fff;
+      margin: 0 5px;
+      font-size: 20px;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<div></div>
+<div></div>
+<body>
+  <!-- Include navigation -->
+  {% include 'nav.html' %}
+
+  <!-- Content -->
+  <!-- Content -->
+  <div></div>
+  <div></div>
+  <div></div>
+<div class="container">
+  <div class="row">
+    <div class="col-md-4">
+      <div class="category-tile">
+        <img src="{{ url_for('static', filename='images/Groceries.jpeg') }}" alt="Category 1">
+        <h3>Groceries</h3>
+        <a href="{{ url_for('category', category_id=1) }}" class="btn btn-primary">View Products</a>
+
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="category-tile">
+        <img src="{{ url_for('static', filename='images/Clothes.jpg') }}" alt="Category 2">
+
+        <h3>Clothing</h3>
+        <a href="{{ url_for('category', category_id=2) }}" class="btn btn-primary">View Products</a>
+
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="category-tile">
+        <img src="{{ url_for('static', filename='images/Books.jpeg') }}" alt="Category 3">
+
+        <h3>Books</h3>
+        <a href="{{ url_for('category', category_id=3) }}" class="btn btn-primary">View Products</a>
+
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4">
+      <div class="category-tile">
+        <img src="{{ url_for('static', filename='images/Electronics.jpeg') }}" alt="Category 4">
+
+        <h3>Electronics</h3>
+        <a href="{{ url_for('category', category_id=4) }}" class="btn btn-primary">View Products</a>
+
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="category-tile">
+        <img src="{{ url_for('static', filename='images/Sports.jpg') }}" alt="Category 5">
+
+        <h3>Sports & Outdoor</h3>
+        <a href="{{ url_for('category', category_id=5) }}" class="btn btn-primary">View Products</a>
+
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="category-tile">
+        <img src="{{ url_for('static', filename='images/Beauty.jpeg') }}" alt="Category 6">
+
+
+        <h3>Beauty</h3>
+        <a href="{{ url_for('category', category_id=6) }}" class="btn btn-primary">View Products</a>
+
+      </div>
+    </div>
+  </div>
+</div>
+  <!-- Include footer -->
+<footer class="footer">
+      <p class="company-name">StoreToDoor ©2023 Brand</p>
+      <div class="social-icons">
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+      </div>
+    </footer>
+  </div>
+  <!-- Bootstrap JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.2/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>E-commerce Categories</title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.2/css/bootstrap.min.css">
+  <!-- Custom CSS -->
+  <style>
+    .category-tile {
+      background-color: #f9f9f9;
+      border: 1px solid #ddd;
+      padding: 20px;
+      text-align: center;
+      margin-bottom: 20px;
+      border-radius: 10px;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .category-tile img {
+      max-width: 100%;
+      margin-bottom: 10px;
+      border-radius: 10px;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .category-tile h3 {
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+
+    .category-tile a {
+      display: inline-block;
+    }
+
+    .category-tile:hover {
+      transform: translateY(-5px);
+      box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .category-tile:hover img {
+      transform: scale(1.05);
+      box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Footer styles */
+    .footer {
+      background-color: #333;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .footer .company-name {
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .footer .social-icons a {
+      color: #fff;
+      margin: 0 5px;
+      font-size: 20px;
+      text-decoration: none;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Include navigation -->
+  {% include 'navigation.html' %}
+
+  <!-- Content -->
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="category-tile">
+          <img src="category1.jpg" alt="Category 1">
+          <h3>Category 1</h3>
+          <a href="category1.html" class="btn btn-primary">View Products</a>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="category-tile">
+          <img src="category2.jpg" alt="Category 2">
+          <h3>Category 2</h3>
+          <a href="category2.html" class="btn btn-primary">View Products</a>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="category-tile">
+          <img src="category3.jpg" alt="Category 3">
+          <h3>Category 3</h3>
+          <a href="category3.html" class="btn btn-primary">View Products</a>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+        <div class="category-tile">
+          <img src="category4.jpg" alt="Category 4">
+          <h3>Category 4</h3>
+          <a href="category4.html" class="btn btn-primary">View Products</a>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="category-tile">
+          <img src="category5.jpg" alt="Category 5">
+          <h3>Category 5</h3>
+          <a href="category5.html" class="btn btn-primary">View Products</a>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="category-tile">
+          <img src="category6.jpg" alt="Category 6">
+          <h3>Category 6</h3>
+          <a href="category6.html" class="btn btn-primary">View Products</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Include footer -->
+  {% include 'footer.html' %}
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.2/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

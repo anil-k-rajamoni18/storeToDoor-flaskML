@@ -1,0 +1,58 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  background-color: #333;
+  padding: 10px;
+  color: white;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-size: 24px;
+}
+
+.search-container {
+  display: flex;
+}
+
+#search-bar {
+  padding: 3px;
+  border: none;
+  border-radius: 3px;
+}
+
+#search-icon {
+  padding: 5px;
+  background-color: #555;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  margin-left: 5px;
+  cursor: pointer;
+}
+
+.menu {
+  display: flex;
+}
+
+button {
+  background-color: transparent;
+  color: white;
+  border: none;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+.fa-search,
+.fa-ellipsis-v,
+.fa-shopping-cart {
+  font-size: 18px;
+}

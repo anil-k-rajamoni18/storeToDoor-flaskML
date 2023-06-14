@@ -1,0 +1,22 @@
+
+{% block content %}
+<div id="message_alert">
+    {% if messages %}
+    {% for message in messages %}
+    {% if message.tags == "success" %}
+    <h5 class="text-success" id="success_msg">{{ message }}</h5>
+    {% else %}
+    <h5 class="text-danger" id="failure_msg">{{ message }}</h5>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+</div>
+<script>
+$(document).ready(function(){
+   var elMessages = $('#message_alert');
+    if (elMessages.length > 0) {
+         $('#message_alert').fadeIn('fast').delay(5000).fadeOut('fast');
+    }
+});
+</script>
+{% endblock content %}
