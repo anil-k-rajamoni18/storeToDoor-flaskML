@@ -152,16 +152,19 @@
     </style>
 </head>
 <body>
+    <!-- Include navigation -->
+  {% include 'nav.html' %}
+
     <div class="container">
         <div class="row">
-            <!-- Generate product HTML for each item -->
-            {% for item in items %}
+            <!-- Generate product HTML for each product -->
+            {% for product in products %}
             <div class="col-xs-12 col-md-6 bootstrap snippets bootdeys">
                 <div class="product-content product-wrap clearfix">
                     <div class="row">
                         <div class="col-md-5 col-sm-12 col-xs-12">
                             <div class="product-image">
-                                <img src="{{ url_for('static', filename='images/' + category.replace(' ', '_') + '_' + product.name.replace(' ', '_') + '.jpg') }}" alt="{{ product.name }}">
+                                <img src="{{ url_for('static', filename='images/' + category.replace(' ', '_') + '_' + product.name.replace(' ', '_') + '.jpeg') }}" alt="{{ product.name }}">
 
                                 <span class="tag2 hot">HOT</span>
                             </div>
@@ -171,9 +174,9 @@
                                 <h5 class="name">
                                     <a href="#">{{ product.name }}<span>{{ product.category.name }}</span></a>
                                 </h5>
-                                <h5 class="price-container">
-                                    <span> $ {{ product.price }}</span>
-                                </h5>
+                                <p class="price-container">
+                                    <span>{{ product.price }}</span>
+                                </p>
                                 <span class="tag1"></span>
                             </div>
                             <div class="description">
@@ -199,6 +202,15 @@
     </div>
 
     <button onclick="history.back()" class="btn btn-primary">Go Back</button>
-
+<div><footer class="footer">
+      <p class="company-name">StoreToDoor ©2023 Brand</p>
+      <div class="social-icons">
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+      </div>
+    </footer>
+  </div></div>
 </body>
 </html>

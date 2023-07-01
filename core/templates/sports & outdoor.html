@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Sports List</title>
+    <title>Sports & Outdoor List</title>
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
     <style>
         body {
@@ -152,16 +152,19 @@
     </style>
 </head>
 <body>
+    <!-- Include navigation -->
+  {% include 'nav.html' %}
+
     <div class="container">
         <div class="row">
-            <!-- Generate product HTML for each item -->
-            {% for item in items %}
+            <!-- Generate product HTML for each product -->
+            {% for product in products %}
             <div class="col-xs-12 col-md-6 bootstrap snippets bootdeys">
                 <div class="product-content product-wrap clearfix">
                     <div class="row">
                         <div class="col-md-5 col-sm-12 col-xs-12">
                             <div class="product-image">
-                                <img src="{{ url_for('static', filename='images/' + category.replace(' ', '_') + '_' + product.name.replace(' ', '_') + '.jpg') }}" alt="{{ product.name }}">
+                                <img src="{{ url_for('static', filename='images/' + category.replace(' ', '_') + '_' + product.name.replace(' ', '_') + '.jpeg') }}" alt="{{ product.name }}">
 
                                 <span class="tag2 hot">HOT</span>
                             </div>
@@ -169,7 +172,7 @@
                         <div class="col-md-7 col-sm-12 col-xs-12">
                             <div class="product-deatil">
                                 <h5 class="name">
-                                    <a href="#">{{ product.name }}<span>{{ <product class="category name"></product> }}</span></a>
+                                    <a href="#">{{ product.name }}<span>{{ product.category.name }}</span></a>
                                 </h5>
                                 <p class="price-container">
                                     <span>{{ product.price }}</span>

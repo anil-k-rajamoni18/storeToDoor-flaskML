@@ -1,4 +1,3 @@
-
 from flask import Flask, render_template, request, redirect, url_for, flash, session
 from flask_login import login_user
 import numpy as np
@@ -383,7 +382,7 @@ def create_app():# Define the base class for models
                     return render_template('send_recommendation.html')
 
                 user = Customer.query.filter_by(email=email).first()
-                print(user.id,user.name)
+                #print(user.id,user.name)
 
 
                 if not user or not user.check_password(password):
@@ -455,6 +454,7 @@ def create_app():# Define the base class for models
                 return redirect(url_for('profile'))
             else:
                 return render_template('profile.html', user=user)
+
 
         # Order History
         @app.route('/order_history')
