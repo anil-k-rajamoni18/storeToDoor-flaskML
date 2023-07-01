@@ -72,10 +72,13 @@ class Product(db.Model):
     category_id = db.Column(db.Integer, db.ForeignKey('category.id'), nullable=False)
     
     def __repr__(self):
-        return f'<Product name={self.name} , category_id= {self.category_id}>'
+        return f'<Product name={self.name} ,Product Id={self.id}, category_id= {self.category_id},Price = {self.price}>'
 @dataclass
 class Cart(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     customer_id = db.Column(db.Integer, db.ForeignKey('customer.id'), nullable=False)
     product_id = db.Column(db.Integer, db.ForeignKey('product.id'), nullable=False)
     quantity = db.Column(db.Integer)
+    product = db.relationship('Product', backref='cart')
+    def __repr__(self):
+        return f'<Customer id={self.customer_id} , product_id= {self.product_id},Quantity = {self.quantity},Product={self.product}>'

@@ -279,16 +279,19 @@ def create_app():# Define the base class for models
         #     else:
         #         return redirect(url_for('login'))
 
-        # Cart page - Show cart items
-        # @app.route('/cart')
-        # def cart():
-        #     if 'customer_id' in session:
-        #         customer_id = session['customer_id']
-        #         cart_items = Cart.query.filter_by(customer_id=customer_id).all()
-        #         total_price = sum(item.product.price * item.quantity for item in cart_items)
-        #         return render_template('cart.html', cart_items=cart_items, total_price=total_price)
-        #     else:
-        #         return redirect(url_for('login'))
+        #Cart page - Show cart items
+        @app.route('/cart')
+        def cart():
+            print("Session -> ", session,session["user_id"])
+            if 'user_id' in session:
+                customer_id = session['user_id']
+                cart_items = Cart.query.filter_by(customer_id=customer_id).all()
+                print(" Cart item in cart medthod-> ",cart_items)
+                total_price = sum(item.product.price * item.quantity for item in cart_items)  
+                print("Total in car method -> ",total_price)  
+                return render_template('cart.html', cart_items=cart_items, total_price=total_price)
+            else:
+                return redirect(url_for('login'))
 
         # Purchase
         # @app.route('/place_order', methods=['POST'])
@@ -336,9 +339,10 @@ def create_app():# Define the base class for models
           
             if request.method == 'POST':
                 message = request.form['message']
+                print(user,user.id,message,user_id)
 
                 # Create a new contact object
-                new_contact = Contactus( message=message)
+                new_contact = Contactus( customer_id=user.id,message=message)
 
                 # Save the contact object to the database
                 db.session.add(new_contact)
@@ -453,7 +457,7 @@ def create_app():# Define the base class for models
                 flash('Profile updated successfully.', 'success')
                 return redirect(url_for('profile'))
             else:
-                return render_template('profile.html', user=user)
+                return render_template('my_profile.html', user=user)
 
 
         # Order History
@@ -572,7 +576,7 @@ def create_app():# Define the base class for models
         
 
         # Add item to cart
-        @app.route('/add_to_cart/<int:product_id>', methods=['POST'])
+        @app.route('/add_to_cart/<int:product_id>', methods=['POST','GET'])
         def add_to_cart(product_id):
             if 'user_id' in session:
                 customer_id = session['user_id']
@@ -580,6 +584,7 @@ def create_app():# Define the base class for models
 
                 # Check if the item already exists in the cart
                 cart_item = Cart.query.filter_by(customer_id=customer_id, product_id=product_id).first()
+                print("Cart item-> ",cart_item)
 
                 if cart_item:
                     # If the item exists, update the quantity
